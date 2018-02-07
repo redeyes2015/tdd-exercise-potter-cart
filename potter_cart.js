@@ -26,31 +26,43 @@ class PotterCart {
     }
     this[book] += count;
   }
-  getMaxmizedBundlePrice (bookCounts, bundleVariety, discount) {
-    let bundledPrice = 0;
+  getMaxmizedBundleCount (bookCounts, bundleVariety) {
+    let bundleCount = 0;
     while (bookCounts.length >= bundleVariety) {
       const currentMinCount = bookCounts.shift();
       for (let i = 0; i < bundleVariety - 1; ++i) {
         bookCounts[i] -= currentMinCount;
       }
-      bundledPrice += 100 * bundleVariety * currentMinCount * discount;
+      bundleCount += currentMinCount;
     }
-    return bundledPrice;
+    return bundleCount;
   }
   getPrice() {
     const bookCounts = AllBooks.map((book) => this[book]).filter(c => c > 0);
     bookCounts.sort((a, b) => a - b)
 
-    let totalPrice = 0;
-
-    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 5, 0.75);
-    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 4, 0.8);
-    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 3, 0.9);
-    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 2, 0.95);
-    if (bookCounts.length > 0) {
-      totalPrice += 100 * bookCounts[0];
+    let bundles = new Array(5);
+    for (let i = 5; i > 0; --i) {
+      bundles[i] = this.getMaxmizedBundleCount(bookCounts, i);
     }
-    return totalPrice;
+    const bundleDiscount = {
+      5: 0.75,
+      4: 0.8,
+      3: 0.9,
+      2: 0.95,
+      1: 1,
+    };
+
+    if (bundles[3] > 0 && bundles[5] > 0) {
+      const extraFourBundlePairs = Math.min(bundles[3], bundles[5]);
+      bundles[3] -= extraFourBundlePairs;
+      bundles[5] -= extraFourBundlePairs;
+      bundles[4] += 2 * extraFourBundlePairs;
+    }
+
+    return bundles.reduce((acc, count, variety) => {
+      return acc + 100 * count * variety * bundleDiscount[variety];
+    }, 0);
   }
 }
 
