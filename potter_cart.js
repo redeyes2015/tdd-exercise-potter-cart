@@ -32,12 +32,24 @@ class PotterCart {
 
     let totalPrice = 0;
 
+    for (let i = 0; i < bookCounts.length - 2; ++i) {
+      const currentMinCount = bookCounts[i];
+      if (currentMinCount === 0) {
+        continue;
+      }
+
+      bookCounts[i] -= currentMinCount;
+      bookCounts[i + 1] -= currentMinCount;
+      bookCounts[i + 2] -= currentMinCount;
+      totalPrice += (100 + 100 + 100) * currentMinCount * 0.9;
+    }
     for (let i = 0; i < bookCounts.length - 1; ++i) {
       const currentMinCount = bookCounts[i];
       if (currentMinCount === 0) {
         continue;
       }
 
+      bookCounts[i] -= currentMinCount;
       bookCounts[i + 1] -= currentMinCount;
       totalPrice += (100 + 100) * currentMinCount * 0.95;
     }
