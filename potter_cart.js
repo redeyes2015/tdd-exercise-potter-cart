@@ -43,6 +43,7 @@ class PotterCart {
 
     let totalPrice = 0;
 
+    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 5, 0.75);
     totalPrice += this.getMaxmizedBundlePrice(bookCounts, 4, 0.8);
     totalPrice += this.getMaxmizedBundlePrice(bookCounts, 3, 0.9);
     totalPrice += this.getMaxmizedBundlePrice(bookCounts, 2, 0.95);
