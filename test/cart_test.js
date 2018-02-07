@@ -17,7 +17,7 @@ Scenario: 第一集買了一本，其他都沒買，價格應為100*1=100元
         When 結帳
         Then 價格應為 100 元
 */
-t.test('buying_1_first_should_be_100_dollor', (t) => {
+t.test('第一集買了一本，其他都沒買，價格應為100*1=100元', (t) => {
   //arrange
   const cart = new PotterCart();
   cart.add(PotterCart.First, 1);
