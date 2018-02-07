@@ -27,9 +27,22 @@ class PotterCart {
     this[book] += count;
   }
   getPrice() {
-    return AllBooks.reduce((acc, book) => {
-      return acc += this[book] * 100;
-    }, 0);
+    const bookCounts = AllBooks.map((book) => this[book]);
+    bookCounts.sort((a, b) => a - b);
+
+    let totalPrice = 0;
+
+    for (let i = 0; i < bookCounts.length - 1; ++i) {
+      const currentMinCount = bookCounts[i];
+      if (currentMinCount === 0) {
+        continue;
+      }
+
+      bookCounts[i + 1] -= currentMinCount;
+      totalPrice += (100 + 100) * currentMinCount * 0.95;
+    }
+    totalPrice += 100 * bookCounts[bookCounts.length - 1];
+    return totalPrice;
   }
 }
 
