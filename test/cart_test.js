@@ -220,3 +220,60 @@ t.test('選便宜的算法', (t) => {
 
   t.end()
 });
+/*
+Scenario: 選便宜的算法, 兩套 5 + 4
+        Given 第一集買了 2 本
+        And 第二集買了 2 本
+        And 第三集買了 2 本
+        And 第四集買了 2 本
+        And 第五集買了 1 本
+        When 結帳
+        Then 價格應為 5本+4本 = 695 元
+*/
+t.test('選便宜的算法, 兩套 5 + 4', (t) => {
+  //arrange
+  const cart = new PotterCart();
+  cart.add(PotterCart.First, 2);
+  cart.add(PotterCart.Second, 2);
+  cart.add(PotterCart.Third, 2);
+  cart.add(PotterCart.Fourth, 2);
+  cart.add(PotterCart.Fifth, 1);
+  const expected = 695;
+
+  //act
+  const actual = cart.getPrice();
+
+  //assert
+  t.equal(actual, expected);
+
+  t.end()
+});
+
+/*
+Scenario: 選便宜的算法，四套 5+3+5+3
+        Given 第一集買了 4 本
+        And 第二集買了 4 本
+        And 第三集買了 4 本
+        And 第四集買了 2 本
+        And 第五集買了 2 本
+        When 結帳
+        Then 價格應為 640*2=1280 元
+*/
+t.test('選便宜的算法，四套 5+3+5+3', (t) => {
+  //arrange
+  const cart = new PotterCart();
+  cart.add(PotterCart.First, 4);
+  cart.add(PotterCart.Second, 4);
+  cart.add(PotterCart.Third, 4);
+  cart.add(PotterCart.Fourth, 2);
+  cart.add(PotterCart.Fifth, 2);
+  const expected = 1280;
+
+  //act
+  const actual = cart.getPrice();
+
+  //assert
+  t.equal(actual, expected);
+
+  t.end()
+});
