@@ -21,7 +21,7 @@ class PotterCart {
     this[Fifth] = 0;
   }
   add(book, count) {
-    if (!book) {
+    if (!AllBooks.includes(book)) {
       throw new Error('unknown book');
     }
     this[book] += count;
