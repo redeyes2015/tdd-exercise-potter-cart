@@ -192,3 +192,31 @@ t.test('第一集買了一本，第二三集各買了兩本，價格應為100*3*
 
   t.end()
 });
+/*
+Scenario: 選便宜的算法
+        Given 第一集買了 2 本
+        And 第二集買了 2 本
+        And 第三集買了 2 本
+        And 第四集買了 1 本
+        And 第五集買了 1 本
+        When 結帳
+        Then 價格應為 4本+4本=640 元
+*/
+t.test('選便宜的算法', (t) => {
+  //arrange
+  const cart = new PotterCart();
+  cart.add(PotterCart.First, 2);
+  cart.add(PotterCart.Second, 2);
+  cart.add(PotterCart.Third, 2);
+  cart.add(PotterCart.Fourth, 1);
+  cart.add(PotterCart.Fifth, 1);
+  const expected = 640;
+
+  //act
+  const actual = cart.getPrice();
+
+  //assert
+  t.equal(actual, expected);
+
+  t.end()
+});
