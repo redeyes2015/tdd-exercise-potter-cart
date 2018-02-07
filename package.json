@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "devDependencies": {
+    "tap": "^11.1.0"
+  }
+}
