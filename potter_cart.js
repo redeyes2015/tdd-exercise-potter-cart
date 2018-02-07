@@ -26,30 +26,26 @@ class PotterCart {
     }
     this[book] += count;
   }
+  getMaxmizedBundlePrice (bookCounts, bundleVariety, discount) {
+    let bundledPrice = 0;
+    while (bookCounts.length >= bundleVariety) {
+      const currentMinCount = bookCounts.shift();
+      for (let i = 0; i < bundleVariety - 1; ++i) {
+        bookCounts[i] -= currentMinCount;
+      }
+      bundledPrice += 100 * bundleVariety * currentMinCount * discount;
+    }
+    return bundledPrice;
+  }
   getPrice() {
-    const bookCounts = AllBooks.map((book) => this[book]);
-    bookCounts.sort((a, b) => a - b);
+    const bookCounts = AllBooks.map((book) => this[book]).filter(c => c > 0);
+    bookCounts.sort((a, b) => a - b)
 
     let totalPrice = 0;
 
-    while (bookCounts.length >= 4) {
-      const currentMinCount = bookCounts.shift();
-      bookCounts[0] -= currentMinCount;
-      bookCounts[1] -= currentMinCount;
-      bookCounts[2] -= currentMinCount;
-      totalPrice += (100 + 100 + 100 + 100) * currentMinCount * 0.8;
-    }
-    while (bookCounts.length >= 3) {
-      const currentMinCount = bookCounts.shift();
-      bookCounts[0] -= currentMinCount;
-      bookCounts[1] -= currentMinCount;
-      totalPrice += (100 + 100 + 100) * currentMinCount * 0.9;
-    }
-    while (bookCounts.length >= 2) {
-      const currentMinCount = bookCounts.shift();
-      bookCounts[0] -= currentMinCount;
-      totalPrice += (100 + 100) * currentMinCount * 0.95;
-    }
+    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 4, 0.8);
+    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 3, 0.9);
+    totalPrice += this.getMaxmizedBundlePrice(bookCounts, 2, 0.95);
     if (bookCounts.length > 0) {
       totalPrice += 100 * bookCounts[0];
     }
