@@ -112,3 +112,31 @@ t.test('一二三四集各買了一本，價格應為100*4*0.8=320', (t) => {
 
   t.end()
 });
+/*
+Scenario: 一次買了整套，一二三四五集各買了一本，價格應為100*5*0.75=375
+        Given 第一集買了 1 本
+        And 第二集買了 1 本
+        And 第三集買了 1 本
+        And 第四集買了 1 本
+        And 第五集買了 1 本
+        When 結帳
+        Then 價格應為 375 元
+*/
+t.test('一次買了整套，一二三四五集各買了一本，價格應為100*5*0.75=375', (t) => {
+  //arrange
+  const cart = new PotterCart();
+  cart.add(PotterCart.First, 1);
+  cart.add(PotterCart.Second, 1);
+  cart.add(PotterCart.Third, 1);
+  cart.add(PotterCart.Fourth, 1);
+  cart.add(PotterCart.Fifth, 1);
+  const expected = 375;
+
+  //act
+  const actual = cart.getPrice();
+
+  //assert
+  t.equal(actual, expected);
+
+  t.end()
+});
